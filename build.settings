@@ -1,0 +1,41 @@
+settings =
+{
+	orientation = {
+		default = "portrait", 
+		supported = { "portrait" }
+	},
+
+	iphone =
+	{
+		plist =
+		{
+			-- UIApplicationExitsOnSuspend = true, -- default is false
+		},
+	},
+
+	android = 
+	{
+	    permissions = {},
+	    usesPermissions = {},
+
+	    strings = {
+	        default_web_client_id = "924593795624-urg2cuc0br0psv61svumbl0hq7f6ms67.apps.googleusercontent.com",
+	        firebase_database_url = "https://neura-sample.firebaseio.com",
+	        gcm_defaultSenderId = "924593795624",
+	        google_api_key = "AIzaSyBeGRSiSeoPQg1n9huwhBvGNJYxm4ww0_4",
+	        google_app_id = "1:924593795624:android:3d85226858b07b12",
+	        google_crash_reporting_api_key = "AIzaSyCNPBVXCt1bisKP1RIsezgC0Xym7MSn9Ec",
+	        google_storage_bucket = "neura-sample.appspot.com"
+	    }
+	},
+
+	plugins =
+	{
+		-- key is the name passed to Lua's 'require()'
+		["plugin.neura"] =
+		{
+			-- required
+			publisherId = "com.neura",
+		},
+	},
+}

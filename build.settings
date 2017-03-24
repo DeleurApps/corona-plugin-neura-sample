@@ -37,5 +37,25 @@ settings =
 			-- required
 			publisherId = "com.neura",
 		},
+		["shared.google.play.services.gcm"] = {
+			-- required
+			publisherId = "com.coronalabs",
+		},
+        ["shared.google.play.services.location"] = {
+			-- required
+			publisherId = "com.coronalabs",
+		},
+        ["shared.google.play.services.analytics"] = {
+			-- required
+			publisherId = "com.coronalabs",
+		},
+        ["shared.android.support.design"] = {
+			-- required
+			publisherId = "com.coronalabs",
+		},
+        ["shared.android.support.v7.appcompat"] = {
+			-- required
+			publisherId = "com.coronalabs",
+		},
 	},
 }

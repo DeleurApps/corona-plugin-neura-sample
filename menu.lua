@@ -67,7 +67,7 @@ local function addDevice()
 end
 
 local function addLocation()
-
+	composer.gotoScene( "add_location" )
 end
 
 local function simulateEvent()
@@ -132,7 +132,7 @@ function scene:create( event )
 	versionText.anchorY = 0
 	versionText.x = 30
 	versionText.y = logo.y + logo.contentHeight + 5
-	versionText.text = "Sdk Version: "..neura.getSdkVersion()
+	versionText.text = "Sdk Version: ".. neura.getSdkVersion()
 	versionText:setFillColor( 0 )
 
 	local neuraSymbolTop = display.newImageRect(sceneGroup, "neura_symbol_top_element.png", 103, 53)

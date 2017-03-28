@@ -1,6 +1,5 @@
 local composer = require( "composer" )
  
- local json = require "json"
 local scene = composer.newScene()
 local widget = require "widget"
 
@@ -34,10 +33,10 @@ end
 
 local function getSituationListener(event)
 	if event.type == "Success" then
-		local situationData = json.decode(event.data)
+		local situationData = event.data
 		situationText.text = json.prettify(situationData)
 		updateUI()
-		print("Situation received successfully: ".. situationData)
+		print("Situation received successfully: ".. situationText.text)
 	else
 		print("Failed to receive situation: "..event.response)
 	end
@@ -45,10 +44,10 @@ end
 
 local function getDailySummaryListener(event)
 	if event.type == "Success" then
-		local dailySummaryData = json.decode(event.data)
+		local dailySummaryData = event.data
 		dailySummaryText.text = json.prettify(dailySummaryData)
 		updateUI()
-		print("Daily summary received successfully: ".. dailySummaryData)
+		print("Daily summary received successfully: ".. dailySummaryText.text)
 	else
 		print("Failed to receive daily summary: "..event.response)
 	end
@@ -56,10 +55,10 @@ end
 
 local function getSleepProfileListener(event)
 	if event.type == "Success" then
-		local sleepProfileData = json.decode(event.data)
+		local sleepProfileData = event.data
 		sleepDataText.text = json.prettify(sleepProfileData)
 		updateUI()
-		print("Sleep Profile received successfully: ".. sleepProfileData)
+		print("Sleep Profile received successfully: ".. sleepDataText.text)
 	else
 		print("Error at receiving sleep data: "..event.response)
 	end
@@ -163,7 +162,7 @@ function scene:create( event )
 	dailySummaryText:setFillColor( 0 )
 	scrollView:insert(dailySummaryText)
 
-	sleepDataHeader = display.newText("Daily Summary", 0, 0, native.systemFont, 18 )
+	sleepDataHeader = display.newText("Sleep Data", 0, 0, native.systemFont, 18 )
 	sleepDataHeader.anchorX = 0
 	sleepDataHeader.x = 0
 	sleepDataHeader.anchorY = 0
@@ -198,10 +197,6 @@ function scene:create( event )
 	scrollView:insert(sleepDataText)
 
 	updateUI()
-	
-	neura.getUserSituation((os.time()-60 * 30)*1000, getSituationListener)
-	neura.getDailySummary((os.time()-60 * 60 * 24)*1000, getDailySummaryListener)
-	neura.getSleepProfile((os.time()-5 * 60 * 60 * 24)*1000, os.time()*1000, getSleepProfileListener)
 
 end
 
@@ -213,6 +208,9 @@ function scene:show( event )
 	local phase = event.phase
 
 	if ( phase == "will" ) then
+		neura.getUserSituation((os.time()-60 * 30)*1000, getSituationListener)
+		neura.getDailySummary((os.time()-60 * 60 * 24)*1000, getDailySummaryListener)
+		neura.getSleepProfile((os.time()-5 * 60 * 60 * 24)*1000, os.time()*1000, getSleepProfileListener)
 		-- Code here runs when the scene is still off screen (but is about to come on screen)
 
 	elseif ( phase == "did" ) then

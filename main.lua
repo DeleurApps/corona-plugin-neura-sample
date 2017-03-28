@@ -1,5 +1,6 @@
 local composer = require( "composer" )
 json = require("json")
+toast = require('plugin.toast')
 neura = require("plugin.neura")
 
 local function generalNeuraListener(event)

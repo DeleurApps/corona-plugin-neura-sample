@@ -17,16 +17,6 @@ settings =
 	{
 	    permissions = {},
 	    usesPermissions = {},
-
-	    strings = {
-	        default_web_client_id = "924593795624-urg2cuc0br0psv61svumbl0hq7f6ms67.apps.googleusercontent.com",
-	        firebase_database_url = "https://neura-sample.firebaseio.com",
-	        gcm_defaultSenderId = "924593795624",
-	        google_api_key = "AIzaSyBeGRSiSeoPQg1n9huwhBvGNJYxm4ww0_4",
-	        google_app_id = "1:924593795624:android:3d85226858b07b12",
-	        google_crash_reporting_api_key = "AIzaSyCNPBVXCt1bisKP1RIsezgC0Xym7MSn9Ec",
-	        google_storage_bucket = "neura-sample.appspot.com"
-	    }
 	},
 
 	plugins =
@@ -37,25 +27,7 @@ settings =
 			-- required
 			publisherId = "com.neura",
 		},
-		["shared.google.play.services.gcm"] = {
-			-- required
-			publisherId = "com.coronalabs",
-		},
-        ["shared.google.play.services.location"] = {
-			-- required
-			publisherId = "com.coronalabs",
-		},
-        ["shared.google.play.services.analytics"] = {
-			-- required
-			publisherId = "com.coronalabs",
-		},
-        ["shared.android.support.design"] = {
-			-- required
-			publisherId = "com.coronalabs",
-		},
-        ["shared.android.support.v7.appcompat"] = {
-			-- required
-			publisherId = "com.coronalabs",
-		},
+		['plugin.toast'] = {publisherId = 'com.spiralcodestudio'},
+		["shared.firebase.messaging"] = {publisherId = 'com.coronalabs'},
 	},
 }

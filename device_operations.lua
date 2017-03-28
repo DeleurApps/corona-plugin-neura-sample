@@ -1,5 +1,4 @@
 local composer = require( "composer" )
-local json = require("json")
  
 local scene = composer.newScene()
 local widget = require "widget"
@@ -18,9 +17,11 @@ local addDeviceByCapabilityBtn
 
 local function getAllDevicesListener(event)
 	if event.type == "Success" then
-		local devices = json.decode(event.data).items
+		local devices = event.data.items
+		toast.show("Successfully received " .. #devices .. " devices")
 		print("Successfully received " .. #devices .. " devices")
 	else
+		toast.show("Failed to receive devices list")
 		print("Failed to receive devices list")
 	end
 end
@@ -31,15 +32,18 @@ end
 
 local function getAllCapabilities()
 	local capabilities = neura.getKnownCapabilities()
+	toast.show("Successfully received " .. #capabilities .. " capabilities")
 	print("Successfully received " .. #capabilities .. " capabilities")
 end
 
 local function hasDeviceWithCapability()
 	local capability = capabilityTextField.text
+	toast.show("User " .. (neura.hasDeviceWithCapability(capability) and "has " or "doesn't have ") .. "device with capability " .. capability)
 	print("User " .. (neura.hasDeviceWithCapability(capability) and "has " or "doesn't have ") .. "device with capability " .. capability)
 end
 
 local function addDeviceListener(event)
+	toast.show(event.response and "Add device completed successfully" or "Add device wasn't completed")
 	print(event.response and "Add device completed successfully" or "Add device wasn't completed")
 end
 
@@ -48,11 +52,19 @@ local function addADevice()
 end
 
 local function addDeviceByCapabilityTextField()
-	neura.addDevice({deviceCapabilityNames = {addDeviceByCapabilityTextField.text}}, addDeviceListener)
+	if (addDeviceByCapabilityTextField.text == "") then
+		toast.show("Can't add device, capabilities are blank")
+	else
+		neura.addDevice({deviceCapabilityNames = {addDeviceByCapabilityTextField.text}}, addDeviceListener)
+	end
 end
 
 local function addDeviceByName()
-	neura.addDevice({deviceName = {addDeviceByNameTextField.text}}, addDeviceListener)
+	if (addDeviceByNameTextField.text == "") then
+		toast.show("Please set a device name")
+	else
+		neura.addDevice({deviceName = {addDeviceByNameTextField.text}}, addDeviceListener)
+	end
 end
 
 -- -----------------------------------------------------------------------------------

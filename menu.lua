@@ -34,6 +34,7 @@ local events = {"userArrivedHome", "userArrivedHomeFromWork", "userLeftHome", "u
 
 local function subscribeToEventListener(event)
 	if event.type == "Failure" then
+		toast.show("Error: Failed to subscribe to event " .. event.event.eventName .. ". Error code: " .. event.data)
 		print("Error: Failed to subscribe to event " .. event.event.eventName .. ". Error code: " .. event.data)
 	else
 		print("Subscribed to event " .. event.event.eventName)

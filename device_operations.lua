@@ -222,19 +222,16 @@ function scene:show( event )
 		capabilityTextField.anchorY = 0
 		capabilityTextField.placeholder = "For example: sleepQuality"
 		capabilityTextField.y = getAllCapabilitiesBtn.y + getAllCapabilitiesBtn.contentHeight/2 + 10
-		sceneGroup:insert(capabilityTextField)
 
 		addDeviceByCapabilityTextField = native.newTextField(display.contentCenterX, 0, display.contentWidth - 60, 30 )
 		addDeviceByCapabilityTextField.anchorY = 0
 		addDeviceByCapabilityTextField.placeholder = "For example: heartRate"
 		addDeviceByCapabilityTextField.y = addADeviceBtn.y + addADeviceBtn.contentHeight/2 + 10
-		sceneGroup:insert(addDeviceByCapabilityTextField)
 
 		addDeviceByNameTextField = native.newTextField(display.contentCenterX, 0, display.contentWidth - 60, 30 )
 		addDeviceByNameTextField.anchorY = 0
 		addDeviceByNameTextField.placeholder = "Enter Device Name"
 		addDeviceByNameTextField.y = addDeviceByCapabilityBtn.y + addDeviceByCapabilityBtn.contentHeight/2 + 10
-		sceneGroup:insert(addDeviceByNameTextField)
 		-- Code here runs when the scene is still off screen (but is about to come on screen)
 
 	elseif ( phase == "did" ) then

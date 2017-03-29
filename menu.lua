@@ -18,6 +18,8 @@ local addLocationBtn
 local simulateEventBtn
 local disconnectBtn
 
+local phoneTextField
+
 
 local events = {"userArrivedHome", "userArrivedHomeFromWork", "userLeftHome", "userArrivedHomeByWalking", "userArrivedHomeByRunning",
   "userIsIdleAtHome", "userIsOnTheWayHome", "userStartedWorkOut", "userFinishedRunning", "userFinishedWorkOut",
@@ -56,7 +58,11 @@ local function authenticateListener(event)
 end
 
 local function requestPermissions()
-	neura.authenticate(authenticateListener)
+	local args = {}
+	if phoneTextField.text ~= "" then
+		args["phone"] = phoneTextField.text
+	end
+	neura.authenticate(args, authenticateListener)
 end
 
 local function services()
@@ -108,6 +114,18 @@ function setUIState( isConnected )
     requestPermissionsBtn.alpha = isConnected and 0 or 1
 
     disconnectBtn:setEnabled( isConnected )
+
+    if phoneTextField == nil and not isConnected then
+	    phoneTextField = native.newTextField(display.contentCenterX, 0, display.contentWidth - 60, 30 )
+		phoneTextField.anchorY = 0
+		phoneTextField.placeholder = "Optional: authenticate with a phone number"
+		phoneTextField.inputType = "phone"
+		phoneTextField.y = neuraStatusText.y + neuraStatusText.contentHeight + 10
+	elseif phoneTextField ~= nil and isConnected then
+		phoneTextField:removeSelf()
+		phoneTextField = nil
+	end
+
 end
 -- -----------------------------------------------------------------------------------
 -- Scene event functions
@@ -159,7 +177,7 @@ function scene:create( event )
 	neuraStatusText.y = neuraStatusTitle.y + neuraStatusTitle.contentHeight
 
 	servicesBtn = widget.newButton( {
-			top = neuraStatusText.y + neuraStatusText.contentHeight + 10,
+			top = neuraStatusText.y + neuraStatusText.contentHeight + 10 + 40,
 			label = "SERVICES",
 			fontSize = 13,
 			labelColor = {default = {1, 1, 1}, over = {1, 1, 1}},
@@ -172,7 +190,7 @@ function scene:create( event )
 	sceneGroup:insert(servicesBtn)
 
 	requestPermissionsBtn = widget.newButton( {
-			top = neuraStatusText.y + neuraStatusText.contentHeight + 10,
+			top = neuraStatusText.y + neuraStatusText.contentHeight + 10 + 40,
 			label = "CONNECT AND REQUEST PERMISSIONS",
 			fontSize = 13,
 			labelColor = {default = {1, 1, 1}, over = {1, 1, 1}},
@@ -253,6 +271,8 @@ function scene:show( event )
 	local phase = event.phase
 
 	if ( phase == "will" ) then
+
+		setUIState(neura.isLoggedIn())
 		-- Code here runs when the scene is still off screen (but is about to come on screen)
 
 	elseif ( phase == "did" ) then
@@ -272,6 +292,10 @@ function scene:hide( event )
 		-- Code here runs when the scene is on screen (but is about to go off screen)
 
 	elseif ( phase == "did" ) then
+		if phoneTextField ~= nil then
+			phoneTextField:removeSelf()
+			phoneTextField = nil
+		end
 		-- Code here runs immediately after the scene goes entirely off screen
 
 	end

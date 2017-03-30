@@ -21,19 +21,6 @@ local disconnectBtn
 local phoneTextField
 
 
-local events = {"userArrivedHome", "userArrivedHomeFromWork", "userLeftHome", "userArrivedHomeByWalking", "userArrivedHomeByRunning",
-  "userIsIdleAtHome", "userIsOnTheWayHome", "userStartedWorkOut", "userFinishedRunning", "userFinishedWorkOut",
-  "userLeftGym", "userFinishedWalking", "userArrivedToGym", "userIsIdleFor2Hours", "userStartedWalking",
-  "userIsIdleFor1Hour", "userStartedRunningFromPlace", "userStartedTransitByWalking", "userStartedRunning", "userFinishedTransitByWalking",
-  "userFinishedDriving", "userStartedDriving", "userLeftNode", "userArrivedAtActiveZone", "userArrivedToNode",
-  "userIsOnTheWayToActiveZone", "userArrivedAtGroceryStore", "userLeftActiveZone", "userArrivedAtSchoolCampus", "userArrivedAtAirport",
-  "userArrivedAtClinic", "userArrivedAtCafe", "userArrivedAtRestaurant", "userLeftSchoolCampus", "userLeftCafe",
-  "userArrivedAtHospital", "userLeftHospital", "userLeftRestaurant", "userLeftAirport", "userArrivedAtPharmacy",
-  "userArrivedToWorkByRunning", "userArrivedToWork", "userArrivedWorkFromHome", "userArrivedToWorkByWalking", "userLeftWork",
-  "userIsOnTheWayToWork", "userStartedSleeping", "userWokeUp", "userGotUp", "userIsAboutToGoToSleep"}
--- }
-
-
 local function subscribeToEventListener(event)
 	if event.type == "Failure" then
 		toast.show("Error: Failed to subscribe to event " .. event.event.eventName .. ". Error code: " .. event.data)
@@ -49,8 +36,15 @@ local function authenticateListener(event)
 		setUIState(true)
 		neura.registerFirebaseToken()
 		
-     	for i, v in ipairs(events) do
-			neura.subscribeToEvent(v, "Identifier_"..v, subscribeToEventListener)
+     	for i, v in ipairs(event.data.events) do
+     		if v.pushNotificationText ~= "" then
+				neura.subscribeToEvent(v.name, "Identifier_"..v.name, subscribeToEventListener)
+				local notificationOptions = {
+					contentTitle = v.displayName,
+					contentText = v.pushNotificationText
+				}
+				neura.registerNotificationForEvent(v.name, notificationOptions)
+			end
 		end
 	else
 		requestPermissionsBtn:setEnabled(true)

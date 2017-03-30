@@ -17,6 +17,7 @@ settings =
 	{
 	    permissions = {},
 	    usesPermissions = {},
+	    useGoogleServicesJson = true,
 	},
 
 	plugins =
@@ -27,7 +28,6 @@ settings =
 			-- required
 			publisherId = "com.neura",
 		},
-		['plugin.toast'] = {publisherId = 'com.spiralcodestudio'},
-		["shared.firebase.messaging"] = {publisherId = 'com.coronalabs'},
+		['plugin.toast'] = {publisherId = 'com.spiralcodestudio'}
 	},
 }

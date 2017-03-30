@@ -9,15 +9,9 @@ local function generalNeuraListener(event)
 	-- print("generalNeuraListener exit")
 end
 
-local firebaseParams = {
-	apiKey = "AIzaSyBeGRSiSeoPQg1n9huwhBvGNJYxm4ww0_4",
-	applicationId = "1:924593795624:android:3d85226858b07b12",
-	gcmSenderId = "924593795624"
-}
 neura.connect({
 	appUid = "badadc23349b3d2d16f4b787823819c3f29b29bd24c158d3aa4590d069e689b3", 
-	appSecret = "77a52fe07ef104079e77d2a66e8630b4d3fbdd3d2dbe06098fda3fb7d8a1df2d",
-	firebase = firebaseParams},
+	appSecret = "77a52fe07ef104079e77d2a66e8630b4d3fbdd3d2dbe06098fda3fb7d8a1df2d"},
 	generalNeuraListener) 
 
 
